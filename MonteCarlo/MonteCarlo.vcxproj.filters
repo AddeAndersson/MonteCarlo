@@ -27,13 +27,7 @@
     <ClInclude Include="Triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ColorDbl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Direction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Pixel.h">
@@ -53,13 +47,7 @@
     <ClCompile Include="Triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ColorDbl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Vertex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Direction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Pixel.cpp">

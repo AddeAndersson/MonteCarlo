@@ -76,6 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\MonteCarlo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
@@ -98,6 +99,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\MonteCarlo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -121,8 +123,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="ColorDbl.h" />
-    <ClInclude Include="Direction.h" />
     <ClInclude Include="Pixel.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Scene.h" />
@@ -131,8 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="ColorDbl.cpp" />
-    <ClCompile Include="Direction.cpp" />
     <ClCompile Include="Pixel.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Scene.cpp" />
