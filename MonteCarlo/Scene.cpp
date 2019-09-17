@@ -5,10 +5,12 @@
 
 Scene::Scene(std::vector<Triangle> in_triangles)
 {
+	/*
 	for(int i = 0; i < in_triangles.size(); ++i)
 	{
 		triangles[i] = in_triangles[i];
 	}
+	*/
 }
 
 
