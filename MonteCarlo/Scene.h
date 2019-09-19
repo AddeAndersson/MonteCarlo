@@ -5,8 +5,8 @@
 class Scene
 {
 public:
-	Scene(Triangle in_triangles[]);
-	~Scene();
+	Scene(std::vector<Triangle> in_triangles);
+	~Scene() = default;
 
 private:
 	std::vector<Triangle> triangles[24];

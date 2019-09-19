@@ -5,23 +5,23 @@
 
 Scene::Scene(std::vector<Triangle> in_triangles)
 {
-	/*
-	for(int i = 0; i < in_triangles.size(); ++i)
+	for(auto i = 0; i < in_triangles.size(); ++i)
 	{
-		triangles[i] = in_triangles[i];
+		triangles->push_back(in_triangles[i]);
 	}
-	*/
-}
-
-
-Scene::~Scene()
-{
 }
 
 
 using namespace std;
 int main()
 {
-	cout << "Hej" << endl;
+	//Room
+
+	//Sphere
+
+	//Cube
+
+	//Tetrahedron
+
 	return 0;
 }
