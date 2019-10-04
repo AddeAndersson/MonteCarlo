@@ -7,18 +7,16 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-extern const double EPS = 1e-4;
-extern const double PI = 3.1415926535898;
 bool isOccluded(Scene &sc, Ray *r, dvec3 lightSource);
 dvec3 findIntersection(Scene &sc, Ray *r, Pixel &p);
 
 Camera::Camera(int in_chosenEye)
 {
-	for(int i = 0; i < HEIGHT; i++)
+	for (int i = 0; i < HEIGHT; i++)
 	{
 		vector<Pixel> temp;
 
-		for(int j = 0; j < WIDTH; j++)
+		for (int j = 0; j < WIDTH; j++)
 		{
 			temp.push_back(Pixel(vec3(0, 0, 0)));
 		}
@@ -80,75 +78,7 @@ void Camera::render(Scene &sc)
 			if (min > pixels[i][j].colorDbl.x) min = pixels[i][j].colorDbl.x;
 			if (min > pixels[i][j].colorDbl.y) min = pixels[i][j].colorDbl.y;
 			if (min > pixels[i][j].colorDbl.z) min = pixels[i][j].colorDbl.z;
-			/*
-			//for all triangles in scene
-			for (auto &t : sc.triangles)
-			{	
-					
-				//test intersection with triangle
-				if(t.rayIntersection(*r))
-				{
-					//shoot shadow ray from point of intersection to light source and calculate angle
-					ang = acos(dot(normalize(lightSource - dvec3(r->end.pos)), t.normal));
-
-					//intersection with triangle or sphere is in shadowed area
-					if(isOccluded(sc, r, lightSource))
-					{
-						pixels[i][j].colorDbl = dvec3(0.0, 0.0, 0.0);
-						break;
-					}
-					//light reaches this point
-					if (abs(ang) < PI / 2)
-					{
-						pixels[i][j].colorDbl = t.colorDbl*cos(ang);
-
-						if (max < t.colorDbl.x) max = t.colorDbl.x;
-						if (max < t.colorDbl.y) max = t.colorDbl.y;
-						if (max < t.colorDbl.z) max = t.colorDbl.z;
-
-						if (min > t.colorDbl.x) min = t.colorDbl.x;
-						if (min > t.colorDbl.y) min = t.colorDbl.y;
-						if (min > t.colorDbl.z) min = t.colorDbl.z;
-
-						break;
-					}
-
-					//light does not reach this point
-					pixels[i][j].colorDbl = dvec3(0.0, 0.0, 0.0);
-					break;
-				}
-			}
-
-			//test intersection with sphere
-			if (rayIntersectionSphere(*r, *sc.sphere))
-			{
-				ang = acos(dot(normalize(lightSource - dvec3(r->end.pos)), normalize(dvec3(r->end.pos) - sc.sphere->center)));
-
-				//intersection with triangle or sphere is in shadowed area
-				if (isOccluded(sc, r, lightSource))
-				{
-					pixels[i][j].colorDbl = dvec3(0.0, 0.0, 0.0);
-				}
-
-				//light reaches this point
-				else if (abs(ang) < PI / 2)
-				{	
-					pixels[i][j].colorDbl = sc.sphere->colorDbl*cos(ang);
-
-					if (max < sc.sphere->colorDbl.x) max = sc.sphere->colorDbl.x;
-					if (max < sc.sphere->colorDbl.y) max = sc.sphere->colorDbl.y;
-					if (max < sc.sphere->colorDbl.z) max = sc.sphere->colorDbl.z;
-
-					if (min > sc.sphere->colorDbl.x) min = sc.sphere->colorDbl.x;
-					if (min > sc.sphere->colorDbl.y) min = sc.sphere->colorDbl.y;
-					if (min > sc.sphere->colorDbl.z) min = sc.sphere->colorDbl.z;
-				}
-				//light does not reach this point
-				else pixels[i][j].colorDbl = dvec3(0.0, 0.0, 0.0);
-			}
-
-			pixels[i][j].ray = r;
-			*/
+			
 		}
 	}
 }
@@ -202,13 +132,14 @@ dvec3 findIntersection(Scene &sc, Ray *r, Pixel &p)
 	bool useSphere = false;
 	//vector<pair<Triangle, double>> distances;
 	Triangle closestTri;
+	dvec3 sphereNormal;
 
 	//find closest intersecting triangle
 	for (auto &t : sc.triangles)
 	{
 		if (t.rayIntersection(*r))
 		{
-
+			//**TODO
 			/*if(length(dvec3(r->end.pos - r->start.pos)) < currDist)
 			{
 				currDist = length(dvec3(r->end.pos - r->start.pos));
@@ -222,6 +153,7 @@ dvec3 findIntersection(Scene &sc, Ray *r, Pixel &p)
 		}
 	}
 
+	//**TODO 
 	/*if (distances.size() == 0) return dvec3(0.0, 0.0, 0.0);
 	sort(distances.begin(), distances.end(),
 		[](const pair<Triangle, double>& lhs, const pair<Triangle, double>& rhs) {
@@ -235,6 +167,7 @@ dvec3 findIntersection(Scene &sc, Ray *r, Pixel &p)
 		if(length(dvec3(r->end.pos - r->start.pos)) < currDist)
 		{
 			useSphere = true;
+			sphereNormal = normalize(dvec3(r->end.pos) - sc.sphere->center);
 		}
 	}
 
@@ -245,7 +178,7 @@ dvec3 findIntersection(Scene &sc, Ray *r, Pixel &p)
 		{
 			case LAMBERTIAN:
 			{
-				ang = acos(dot(normalize(lightSource - dvec3(r->end.pos)), normalize(dvec3(r->end.pos) - sc.sphere->center)));
+				ang = acos(dot(normalize(lightSource - dvec3(r->end.pos)), sphereNormal));
 
 				//intersection with triangle or sphere is in shadowed area
 				if (isOccluded(sc, r, lightSource))
@@ -266,14 +199,19 @@ dvec3 findIntersection(Scene &sc, Ray *r, Pixel &p)
 			}
 			case OREN:
 			{
+				//**TODO
 				return dvec3(0.0, 0.0, 0.0);
 			}
 			case MIRROR:
 			{
-				return dvec3(0.0, 0.0, 0.0);
+				//ray is perfectly reflected in a new direction
+				dvec3 reflectedDir = r->dir - 2.0 * dot(r->dir, sphereNormal) * sphereNormal;
+				Ray *reflectedRay = new Ray(r->end, reflectedDir, r->color);
+				return findIntersection(sc, reflectedRay, p);
 			}
 			case TRANSPARENT:
 			{
+				//**TODO
 				return dvec3(0.0, 0.0, 0.0);
 			}
 			
@@ -306,14 +244,19 @@ dvec3 findIntersection(Scene &sc, Ray *r, Pixel &p)
 		}
 		case OREN:
 		{
+			//**TODO
 			return dvec3(0.0, 0.0, 0.0);
 		}
 		case MIRROR:
 		{
-			return dvec3(0.0, 0.0, 0.0);
+			//ray is perfectly reflected in a new direction
+			dvec3 reflectedDir = r->dir - 2.0 * dot(r->dir, closestTri.normal) * closestTri.normal;
+			Ray *reflectedRay = new Ray(r->end, reflectedDir, r->color);
+			return findIntersection(sc, reflectedRay, p);
 		}
 		case TRANSPARENT:
 		{
+			//**TODO
 			return dvec3(0.0, 0.0, 0.0);
 		}
 

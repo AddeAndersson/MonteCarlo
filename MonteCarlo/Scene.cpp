@@ -2,9 +2,6 @@
 #include "Triangle.h"
 #include "Sphere.h"
 
-
-const double PI = 3.1415926535898;
-
 Scene::Scene(vector<Triangle> in_triangles)
 {
 	for (auto &t : in_triangles) triangles.push_back(t);
@@ -39,8 +36,8 @@ int main()
 	dvec3 blue(0, 0, 1);
 
 	//Sphere
-	Sphere *S1 = new Sphere(dvec3(10.0, -3.0, 0.0), cyan, 2.0, LAMBERTIAN);
-	//Sphere *S1 = new Sphere(dvec3(10.0, 1.0, -4.0), cyan, 1.0, LAMBERTIAN);
+	Sphere *S1 = new Sphere(dvec3(8.0, -3.0, 0.0), cyan, 2.0, MIRROR);
+	//Sphere *S1 = new Sphere(dvec3(10.0, 1.0, -4.0), cyan, 1.0, MIRROR);
 
 	//Tetrahedra
 	Vertex Tetra1(5.0, 1, -2.0); Vertex Tetra2(8.0, -1.0, -2.0);

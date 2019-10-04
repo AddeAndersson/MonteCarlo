@@ -1,7 +1,6 @@
 #include "Sphere.h"
 
 
-
 Sphere::Sphere(dvec3 in_center, dvec3 in_color, double in_radius, int in_surface)
 :center(in_center), colorDbl(in_color), radius(in_radius), surface(in_surface)
 {
@@ -16,24 +15,22 @@ bool rayIntersectionSphere(Ray &r, Sphere sphere)
 	double c = dot(dvec3(r.start.pos) - sphere.center, dvec3(r.start.pos) - sphere.center) - pow(sphere.radius, 2.0);
 	
 	//no intersection with sphere
-	if(pow(b/2.0, 2.0) - a * c < 0.0)
+	if(pow(b * 0.5, 2.0) - a * c < EPS)
 	{
 		return false;
 	}
 	
-	double d1 = -(b/2.0) + sqrt(pow(b / 2.0, 2.0) - a * c);
-	double d2 = -(b / 2.0) - sqrt(pow(b / 2.0, 2.0) - a * c);
+	double d1 = -(b * 0.5) + sqrt(pow(b * 0.5, 2.0) - a * c);
+	double d2 = -(b * 0.5) - sqrt(pow(b * 0.5, 2.0) - a * c);
 
 	//no legitimate intersection with sphere
-	if (d1 < 0.0 && d2 < 0.0) return false;
+	if (d1 < EPS && d2 < EPS) return false;
 
 	//d2 is always less than d1, so if d2 > 0.0, so is d1
-	double d = (d2 > 0.0) ? d2 : d1;
+	double d = (d2 > EPS) ? d2 : d1;
 
-	//Beta version test of collision inside sphere
-	//if (length(dvec3(dvec3(r.start.pos) + r.dir * d) - sphere.center) < sphere.radius + 1e-4) return false;
+	double offset = length((dvec3(r.start.pos) + r.dir * d) - sphere.center) - sphere.radius;
 
-	//set end vertex position for ray
 	r.end.pos = dvec4(dvec3(r.start.pos) + r.dir * d, 1.0);
 
 	return true;	

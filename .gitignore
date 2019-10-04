@@ -441,5 +441,8 @@ MigrationBackup/
 #glm folder
 /MonteCarlo/glm
 
-#glm folder
+#bitmap folder
 /MonteCarlo/bitmap
+
+#vs cache
+/.vs
