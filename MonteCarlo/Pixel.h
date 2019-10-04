@@ -1,15 +1,17 @@
 #pragma once
-#include <glm/vec3.hpp>
 #include "Ray.h"
+//#include "Triangle.h"
 
 class Pixel
 {
 public:
-	Pixel(glm::vec3 in_colorDbl, Ray *in_ray);
-	Pixel(glm::vec3 in_colorDbl);
+	Pixel(dvec3 in_colorDbl, Ray *in_ray);
+	Pixel(dvec3 in_colorDbl);
+
+	friend ostream& operator<<(ostream &out, Pixel p);
 	~Pixel() = default;
 
-	glm::vec3 colorDbl;
+	dvec3 colorDbl;
 	Ray *ray;
 };
 

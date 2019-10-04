@@ -1,14 +1,15 @@
 #pragma once
-#include "Triangle.h"
-#include <vector>
+#include "Camera.h"
+
+class Sphere;
 
 class Scene
 {
 public:
-	Scene(std::vector<Triangle> in_triangles);
+	Scene(vector<Triangle> in_triangles);
 	~Scene() = default;
 
-private:
-	std::vector<Triangle> triangles[24];
+	vector<Triangle> triangles;
+	Sphere *sphere = nullptr;
 };
 

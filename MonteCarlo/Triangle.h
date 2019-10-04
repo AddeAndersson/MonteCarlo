@@ -1,19 +1,26 @@
 #pragma once
-#include <glm/glm.hpp>
 #include "Ray.h"
-#include "Vertex.h"
-#include <vector>
+
+const int LAMBERTIAN = 0;
+const int OREN = 1;
+const int MIRROR = 2;
+const int TRANSPARENT = 3;
+const int LIGHT = 4;
 
 class Triangle
 {
 	public:
-		Triangle(std::vector<Vertex> &in_vertices, glm::vec3 in_colorDbl);
-		glm::vec3 rayIntersection(Ray &arg); //Return type might be wrong
+		Triangle();
+		Triangle(vector<Vertex> &in_vertices, vec3 in_colorDbl, int in_surface);
+		bool rayIntersection(Ray &arg); //Return type might be wrong
 		Triangle& operator=(Triangle lhs);
+		friend ostream& operator<<(ostream &out, Triangle t);
+
 		~Triangle() = default;
 	
-		std::vector<Vertex> vertices;
-		glm::vec3 colorDbl;
-		glm::vec3 normal;
+		vector<Vertex> vertices;
+		dvec3 colorDbl;
+		dvec3 normal;
+		int surface;
 };
 
